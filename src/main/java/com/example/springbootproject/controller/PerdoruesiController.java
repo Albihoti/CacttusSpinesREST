@@ -2,29 +2,47 @@ package com.example.springbootproject.controller;
 
 
 import com.example.springbootproject.model.Perdoruesi;
+import com.example.springbootproject.model.PerdoruesiDto;
+import com.example.springbootproject.service.PerdoruesiService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-@RequestMapping("/")
+@RestController
 public class PerdoruesiController {
+    public final PerdoruesiService service;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> responseStrin(){
-        return new ResponseEntity<>("hello", HttpStatus.OK);
+    public PerdoruesiController(PerdoruesiService service) {
+        this.service = service;
     }
 
-//
-//    @PostMapping("/test")
-//    public  ResponseEntity<Perdoruesi> postData(@RequestBody  Perdoruesi perdoruesi){
-////        return ResponseEntity<Perdo   ruesi>("")
-//    }
+
+    @GetMapping("/")
+    public ResponseEntity<Perdoruesi> getPerdoruesi(){
+        return  ResponseEntity.status(HttpStatus.OK).body(new Perdoruesi());
+
+    }
+
+
+    @PostMapping("/login")
+    public  ResponseEntity<Perdoruesi> login(@RequestBody Perdoruesi perdoruesi){
+        return service.login(perdoruesi);
+    }
+
+
+    @PostMapping("/perdoruesi/register")
+    public Perdoruesi registerAccount(@RequestBody Perdoruesi p){
+        System.out.println(p);
+      return service.registerNewAccount(p);
+
+
+
+
+
+    }
 
 
 }

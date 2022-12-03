@@ -1,45 +1,28 @@
 package com.example.springbootproject.model;
 
-
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.jetbrains.annotations.NotNull;
 
-@Entity
-public class Perdoruesi {
+public class PerdoruesiDto {
 
 
     private Integer id;
+
+
     private String username;
+
+
     private String email;
+
+
     private String password;
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    private String matchingPassword;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Id
     public Integer getId() {
         return id;
     }
@@ -48,15 +31,38 @@ public class Perdoruesi {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Perdoruesi{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(@NotNull String username) {
+        this.username = username;
     }
 
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotNull String email) {
+        this.email = email;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotNull String password) {
+        this.password = password;
+    }
+
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(@NotNull String matchingPassword) {
+        this.matchingPassword = matchingPassword;
+    }
 }
