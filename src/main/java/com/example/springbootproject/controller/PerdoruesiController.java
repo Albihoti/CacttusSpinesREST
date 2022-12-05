@@ -4,15 +4,23 @@ package com.example.springbootproject.controller;
 import com.example.springbootproject.model.Perdoruesi;
 import com.example.springbootproject.model.PerdoruesiDto;
 import com.example.springbootproject.service.PerdoruesiService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+
+
 @RestController
+@RequestMapping("rest")
+@CrossOrigin
 public class PerdoruesiController {
+
     public final PerdoruesiService service;
 
     public PerdoruesiController(PerdoruesiService service) {
@@ -20,10 +28,19 @@ public class PerdoruesiController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<Perdoruesi> getPerdoruesi(){
         return  ResponseEntity.status(HttpStatus.OK).body(new Perdoruesi());
 
+    }
+
+    @GetMapping("/hello")
+    @ResponseBody
+    public Perdoruesi getText(){
+        System.out.println("HelloWorld");
+        Perdoruesi perdo = service.getPerdoruesiByUsername("mael");
+        System.out.println(perdo);
+        return perdo;
     }
 
 
@@ -33,11 +50,10 @@ public class PerdoruesiController {
     }
 
 
-    @PostMapping("/perdoruesi/register")
-    public Perdoruesi registerAccount(@RequestBody Perdoruesi p){
-        System.out.println(p);
-      return service.registerNewAccount(p);
-
+       @RequestMapping(value="/perdoruesi/register",method = RequestMethod.POST)
+        public ResponseEntity<Perdoruesi> registerAccount(@RequestBody PerdoruesiDto p){
+                    System.out.println(p);
+        return  service.registerNewAccount(p);
 
 
 

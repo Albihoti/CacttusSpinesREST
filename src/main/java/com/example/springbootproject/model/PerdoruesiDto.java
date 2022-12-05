@@ -7,27 +7,29 @@ import org.jetbrains.annotations.NotNull;
 
 public class PerdoruesiDto {
 
+    @NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private long id;
 
-    private Integer id;
-
-
+    @NotNull
     private String username;
 
-
+    @NotNull
     private String email;
 
-
+    @NotNull
     private String password;
 
 
-    private String matchingPassword;
 
 
-    public Integer getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,11 +60,4 @@ public class PerdoruesiDto {
     }
 
 
-    public String getMatchingPassword() {
-        return matchingPassword;
-    }
-
-    public void setMatchingPassword(@NotNull String matchingPassword) {
-        this.matchingPassword = matchingPassword;
-    }
 }

@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface PerdoruesitRepository  extends JpaRepository<Perdoruesi, Integer> {
 
     Optional<Perdoruesi> findByUsername(String username);
+    Optional<Perdoruesi> findByEmail(String email);
 }
