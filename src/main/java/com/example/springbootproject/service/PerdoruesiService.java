@@ -37,7 +37,25 @@ public class PerdoruesiService  {
             return null;
         }
     }
+
+    public  Perdoruesi getPerdoruesiById(Integer id){
+        Optional<Perdoruesi> optionalPerdoruesi = repository.findById(id);
+        if(optionalPerdoruesi.isPresent()){
+            return optionalPerdoruesi.get();
+        }
+        else{
+            return null;
+        }
+    }
+
+    public ResponseEntity<Perdoruesi> getProfile(Integer id){
+        Perdoruesi perdoruesi1 = getPerdoruesiById(id);
+
+        return ResponseEntity.ok(perdoruesi1);
+
+    }
     public ResponseEntity<Perdoruesi> login(Perdoruesi perdoruesi){
+
         Perdoruesi savedPerdoruesi = getPerdoruesiByUsername(perdoruesi.getUsername());
         if(savedPerdoruesi!=null){
             if(perdoruesi.getPassword().equals(savedPerdoruesi.getPassword())){
@@ -59,13 +77,15 @@ public class PerdoruesiService  {
     public ResponseEntity<Perdoruesi> registerNewAccount(PerdoruesiDto p){
 
         if(!repository.findByUsername(p.getUsername()).isPresent() ) {
+
             if (!repository.findByEmail(p.getEmail()).isPresent()) {
                 System.out.println(!repository.findByUsername(p.getUsername()).isPresent());
                 Perdoruesi perdoruesi = new Perdoruesi();
-                perdoruesi.setId(p.getId());
+
                 perdoruesi.setUsername(p.getUsername());
                 perdoruesi.setEmail(p.getEmail());
                 perdoruesi.setPassword(p.getPassword());
+
                 repository.save(perdoruesi);
                 System.out.println("Perdoruesi u krijua me sukses!!!");
                 return ResponseEntity.status(HttpStatus.OK).build();

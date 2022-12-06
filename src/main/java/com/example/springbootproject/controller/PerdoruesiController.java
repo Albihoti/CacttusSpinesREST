@@ -55,9 +55,11 @@ public class PerdoruesiController {
                     System.out.println(p);
         return  service.registerNewAccount(p);
 
+    }
 
-
-
+    @GetMapping("/userProfile/{id}")
+    public ResponseEntity<Perdoruesi> getProfile(@PathVariable Integer id ){
+        return  service.getProfile(id);
     }
 
 

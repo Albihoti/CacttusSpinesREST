@@ -7,10 +7,10 @@ services:
     volumes:
       - ./postgres/init/:/docker-entrypoint-initdb.d/
     environment:
-      POSTGRES_DB: spines
-      POSTGRES_USER: spines
-      POSTGRES_PASSWORD: spines
-      PGDATA: /var/lib/postgresql/data/spines
+      POSTGRES_DB: spiness
+      POSTGRES_USER: spiness
+      POSTGRES_PASSWORD: spiness
+      PGDATA: /var/lib/postgresql/data/spiness
     networks:
       - backend
 

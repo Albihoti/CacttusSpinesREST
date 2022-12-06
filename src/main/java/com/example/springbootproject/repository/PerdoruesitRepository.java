@@ -10,4 +10,6 @@ public interface PerdoruesitRepository  extends JpaRepository<Perdoruesi, Intege
 
     Optional<Perdoruesi> findByUsername(String username);
     Optional<Perdoruesi> findByEmail(String email);
+
+    Optional<Perdoruesi> findById(Integer id);
 }
