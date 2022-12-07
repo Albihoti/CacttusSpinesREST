@@ -45,14 +45,14 @@ public class PerdoruesiController {
 
 
     @PostMapping("/login")
-    public  ResponseEntity<Perdoruesi> login(@RequestBody Perdoruesi perdoruesi){
+    public  ResponseEntity<PerdoruesiDto> login(@RequestBody Perdoruesi perdoruesi){
         return service.login(perdoruesi);
     }
 
 
-       @RequestMapping(value="/perdoruesi/register",method = RequestMethod.POST)
-        public ResponseEntity<Perdoruesi> registerAccount(@RequestBody PerdoruesiDto p){
-                    System.out.println(p);
+    @RequestMapping(value="/perdoruesi/register",method = RequestMethod.POST)
+    public ResponseEntity<PerdoruesiDto> registerAccount(@RequestBody PerdoruesiDto p){
+        System.out.println(p);
         return  service.registerNewAccount(p);
 
     }
@@ -62,5 +62,10 @@ public class PerdoruesiController {
         return  service.getProfile(id);
     }
 
+
+    @PutMapping("/perdoruesi/update/{id}")
+    public  ResponseEntity<Perdoruesi> updateUser(@PathVariable Integer id, @RequestBody PerdoruesiDto p){
+                    return service.updateUser(p, id);
+    }
 
 }

@@ -4,16 +4,11 @@ import com.example.springbootproject.model.Perdoruesi;
 import com.example.springbootproject.model.PerdoruesiDto;
 import com.example.springbootproject.repository.PerdoruesitRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
-import java.util.UUID;
 
-import static java.util.UUID.randomUUID;
 
 @Service
 public class PerdoruesiService  {
@@ -38,6 +33,9 @@ public class PerdoruesiService  {
         }
     }
 
+
+
+
     public  Perdoruesi getPerdoruesiById(Integer id){
         Optional<Perdoruesi> optionalPerdoruesi = repository.findById(id);
         if(optionalPerdoruesi.isPresent()){
@@ -48,67 +46,84 @@ public class PerdoruesiService  {
         }
     }
 
+
+
+
     public ResponseEntity<Perdoruesi> getProfile(Integer id){
         Perdoruesi perdoruesi1 = getPerdoruesiById(id);
 
         return ResponseEntity.ok(perdoruesi1);
-
     }
-    public ResponseEntity<Perdoruesi> login(Perdoruesi perdoruesi){
 
+
+
+
+    public ResponseEntity<PerdoruesiDto> login(Perdoruesi perdoruesi){
         Perdoruesi savedPerdoruesi = getPerdoruesiByUsername(perdoruesi.getUsername());
+            PerdoruesiDto dtoPerdoruesi = new PerdoruesiDto();
         if(savedPerdoruesi!=null){
             if(perdoruesi.getPassword().equals(savedPerdoruesi.getPassword())){
+                dtoPerdoruesi.setMessage(true);
+                dtoPerdoruesi.setEmail(savedPerdoruesi.getEmail());
+                dtoPerdoruesi.setUsername(savedPerdoruesi.getUsername());
+                dtoPerdoruesi.setId(savedPerdoruesi.getId());
                 System.out.println("Jeni lloguar me sukses!!");
-                return ResponseEntity.ok(savedPerdoruesi);
-
+                return ResponseEntity.ok(dtoPerdoruesi);
             }
             else{
+                dtoPerdoruesi.setMessage(false);
                 System.out.println("gabim kredintials");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-
+                return ResponseEntity.ok(dtoPerdoruesi);
             }
         }
         else{
+            dtoPerdoruesi.setMessage(false);
             System.out.println("Not found");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.ok(dtoPerdoruesi);
         }
     }
-    public ResponseEntity<Perdoruesi> registerNewAccount(PerdoruesiDto p){
 
-        if(!repository.findByUsername(p.getUsername()).isPresent() ) {
 
-            if (!repository.findByEmail(p.getEmail()).isPresent()) {
-                System.out.println(!repository.findByUsername(p.getUsername()).isPresent());
+
+
+
+    public ResponseEntity<PerdoruesiDto> registerNewAccount(PerdoruesiDto p){
+        PerdoruesiDto perdoruesiDto = new PerdoruesiDto();
+        if(!(repository.findByUsername(p.getUsername()).isPresent() || repository.findByEmail(p.getEmail()).isPresent())) {
                 Perdoruesi perdoruesi = new Perdoruesi();
-
                 perdoruesi.setUsername(p.getUsername());
                 perdoruesi.setEmail(p.getEmail());
                 perdoruesi.setPassword(p.getPassword());
-
                 repository.save(perdoruesi);
+
+                perdoruesiDto.setMessage(true);
+                perdoruesiDto.setId(perdoruesi.getId());
                 System.out.println("Perdoruesi u krijua me sukses!!!");
-                return ResponseEntity.status(HttpStatus.OK).build();
-            }
-            System.out.println("User Exists");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-
-
+                return ResponseEntity.ok(perdoruesiDto);
         }
         else{
             System.out.println("User exists");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            perdoruesiDto.setMessage(false);
+
+            return ResponseEntity.ok(perdoruesiDto);
+        }
         }
 
 
 
 
 
+        public ResponseEntity<Perdoruesi> updateUser(PerdoruesiDto p, Integer id){
+
+                    Perdoruesi perdoruesi = getPerdoruesiById(id);
+
+                    perdoruesi.setUsername(p.getUsername());
+                    perdoruesi.setEmail(p.getEmail());
+                    perdoruesi.setPassword(p.getPassword());
+                    repository.save(perdoruesi);
+                    return ResponseEntity.ok(perdoruesi);
 
         }
-
-
-
     }
 
  

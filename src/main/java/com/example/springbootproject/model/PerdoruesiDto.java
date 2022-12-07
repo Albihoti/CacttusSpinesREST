@@ -10,7 +10,7 @@ public class PerdoruesiDto {
 
 
 
-
+    private Integer id;
     private String username;
 
     private String email;
@@ -19,6 +19,23 @@ public class PerdoruesiDto {
     private String password;
 
     private boolean message;
+    private boolean isnull;
+
+    public boolean isIsnull() {
+        return isnull;
+    }
+
+    public void setIsnull(boolean isnull) {
+        this.isnull = isnull;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public boolean isMessage() {
         return message;
